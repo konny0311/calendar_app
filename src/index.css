@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --panel-width: 320px;
+}
+
+.app-container {
+  min-height: 100dvh;
+}
+
+.shadow-card {
+  @apply shadow-sm border border-gray-200 bg-white rounded-lg;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-ghost {
+  @apply text-gray-700 hover:bg-gray-100;
+}
+
+.tab {
+  @apply px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 data-[active=true]:bg-blue-50 data-[active=true]:text-blue-700;
+}
+
+.grid-cell {
+  @apply border-t border-gray-100 hover:bg-blue-50 cursor-pointer;
+}
+
+.grid-cell.selected {
+  @apply bg-blue-200/60;
+}
+
+.time-col-label {
+  @apply text-xs text-gray-400 pr-2 select-none;
+}
+
+.toast {
+  @apply fixed left-1/2 -translate-x-1/2 bottom-4 px-4 py-2 rounded-md bg-gray-900 text-white text-sm shadow-lg;
+}
+
