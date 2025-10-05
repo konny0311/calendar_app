@@ -20,7 +20,7 @@ export default function TimeGrid({ baseDate, days, stepMinutes = 15, dayRanges, 
   const [drag, setDrag] = useState<{ dayIndex: number; start: number; end: number } | null>(null);
 
   const handlePointerDown = (e: React.PointerEvent, dayIndex: number, slotIndex: number) => {
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    // Start drag selection. No pointer capture so pointerenter on other cells fires while dragging.
     setDrag({ dayIndex, start: slotIndex * stepMinutes, end: slotIndex * stepMinutes + stepMinutes });
   };
 

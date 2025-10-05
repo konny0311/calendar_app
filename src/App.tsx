@@ -146,7 +146,6 @@ export default function App() {
             <PreviewPanel
               items={previewItems}
               onCopy={handleCopy}
-              onClearDates={() => setDayRanges({})}
               onClearRanges={() => setDayRanges({})}
             />
             {copyFail && (

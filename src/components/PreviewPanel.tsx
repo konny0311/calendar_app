@@ -5,11 +5,10 @@ import { formatInTimeZone } from 'date-fns-tz';
 type Props = {
   items: { start: Date; end: Date }[];
   onCopy: (text: string) => Promise<void>;
-  onClearDates?: () => void;
   onClearRanges?: () => void;
 };
 
-export default function PreviewPanel({ items, onCopy, onClearDates, onClearRanges }: Props) {
+export default function PreviewPanel({ items, onCopy, onClearRanges }: Props) {
   const lines = items.map(({ start, end }) => {
     const isAllDay = formatInTimeZone(start, TZ, 'HH:mm') === '00:00' && formatInTimeZone(end, TZ, 'HH:mm') === '00:00' &&
       formatInTimeZone(start, TZ, 'yyyyMMdd') !== formatInTimeZone(end, TZ, 'yyyyMMdd');
@@ -27,14 +26,11 @@ export default function PreviewPanel({ items, onCopy, onClearDates, onClearRange
       <div className="text-sm text-gray-600 mb-1">出力プレビュー</div>
       <pre className="p-3 bg-gray-50 rounded border border-gray-200 break-words min-h-[48px] whitespace-pre-wrap" data-testid="preview-text">{text}</pre>
       <button className="btn btn-primary w-full mt-3" onClick={handleCopy}>コピー</button>
-      <div className="flex gap-2 mt-2">
-        {onClearDates && (
-          <button className="btn btn-ghost" onClick={onClearDates}>日付をクリア</button>
-        )}
-        {onClearRanges && (
+      {onClearRanges && (
+        <div className="mt-2">
           <button className="btn btn-ghost" onClick={onClearRanges}>時間帯をクリア</button>
-        )}
-      </div>
+        </div>
+      )}
       {items.length > 0 && (
         <details className="mt-3 text-xs text-gray-500">
           <summary>詳細（ISO8601 / Asia/Tokyo）</summary>
