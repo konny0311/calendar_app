@@ -46,3 +46,15 @@
   @apply fixed left-1/2 -translate-x-1/2 bottom-4 px-4 py-2 rounded-md bg-gray-900 text-white text-sm shadow-lg;
 }
 
+/* Responsive two-column layout: stacks on small screens */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 1fr var(--panel-width);
+  }
+}

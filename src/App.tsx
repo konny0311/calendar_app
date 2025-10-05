@@ -114,7 +114,7 @@ export default function App() {
     <div className="app-container p-3 sm:p-6">
       <div className="max-w-[1200px] mx-auto">
         <Header view={view} onChangeView={setView} cursorDate={cursorDate} setCursorDate={setCursorDate} />
-        <div className="mt-4 grid gap-4" style={{ gridTemplateColumns: '1fr var(--panel-width)' }}>
+        <div className="mt-4 main-grid">
           <div className="min-w-0">
             {view === 'month' && (
               <MonthView
@@ -142,7 +142,7 @@ export default function App() {
               />
             )}
           </div>
-          <div className="min-w-[var(--panel-width)]">
+          <div className="min-w-0 lg:min-w-[var(--panel-width)]">
             <PreviewPanel
               items={previewItems}
               onCopy={handleCopy}

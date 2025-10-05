@@ -35,12 +35,12 @@ export default function Header({ view, onChangeView, cursorDate, setCursorDate }
   const goToday = () => setCursorDate(new Date());
 
   return (
-    <div className="flex items-center justify-between gap-4 p-3 shadow-card">
+    <div className="flex items-center justify-between gap-2 sm:gap-4 p-3 shadow-card sticky top-2 z-20">
       <div className="flex items-center gap-2">
         <button className="btn btn-ghost" onClick={goPrev} aria-label="前へ">‹</button>
         <button className="btn btn-ghost" onClick={goToday}>今日</button>
         <button className="btn btn-ghost" onClick={goNext} aria-label="次へ">›</button>
-        <div className="ml-4 text-lg font-semibold">{title}</div>
+        <div className="ml-2 sm:ml-4 text-base sm:text-lg font-semibold">{title}</div>
       </div>
       <div className="flex items-center gap-1">
         {(['month','week','day'] as const).map(v => (
@@ -52,4 +52,3 @@ export default function Header({ view, onChangeView, cursorDate, setCursorDate }
     </div>
   );
 }
-

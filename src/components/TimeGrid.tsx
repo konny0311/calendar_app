@@ -63,28 +63,43 @@ export default function TimeGrid({ baseDate, days, stepMinutes = 15, dayRanges, 
     return ranges.some(r => minute >= r.startMin && minute < r.endMin);
   };
 
+  const slotPx = stepMinutes === 15 ? 24 : stepMinutes === 30 ? 48 : stepMinutes * 1.6;
+
   return (
     <div className="shadow-card p-2" ref={containerRef} onPointerUp={handlePointerUp}>
-      <div className="h-[70vh] overflow-y-auto relative">
+      <div className="h-[70vh] overflow-auto relative">
         <div
           className="grid sticky top-0 z-10 bg-white border-b border-gray-200"
-          style={{ gridTemplateColumns: `60px repeat(${days}, minmax(0, 1fr))` }}
+          style={{ gridTemplateColumns: `44px repeat(${days}, 1fr)` }}
         >
           <div />
-          {Array.from({ length: days }, (_, d) => (
-            <div key={d} className="text-xs text-gray-500 py-2">
-              {formatInTimeZone(addDays(baseDate, d), TZ, 'M/d(EEE)')}
-            </div>
-          ))}
+          {Array.from({ length: days }, (_, d) => {
+            const date = addDays(baseDate, d);
+            const isToday = ymdInTokyo(date) === ymdInTokyo(new Date());
+            const dow = formatInTimeZone(date, TZ, 'EEE');
+            const dayNum = formatInTimeZone(date, TZ, 'd');
+            return (
+              <div key={d} className="py-1 sm:py-2 text-center select-none">
+                <div className="text-[11px] sm:text-xs text-gray-500 leading-none">{dow}</div>
+                <div
+                  className={
+                    `inline-flex items-center justify-center mt-1 w-6 h-6 rounded-full text-sm font-medium ` +
+                    (isToday ? 'bg-blue-600 text-white' : 'text-gray-800')
+                  }
+                >
+                  {dayNum}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="grid" style={{ gridTemplateColumns: `60px repeat(${days}, minmax(0, 1fr))` }}>
+        <div className="grid" style={{ gridTemplateColumns: `44px repeat(${days}, 1fr)` }}>
           {/* time labels aligned to slots */}
           <div className="flex flex-col">
             {Array.from({ length: slotsPerDay }, (_, sIdx) => {
               const show = sIdx % (60 / stepMinutes) === 0; // every hour
               const lbl = show ? minutesToLabel(sIdx * stepMinutes) : '';
-              const slotPx = stepMinutes === 15 ? 24 : stepMinutes === 30 ? 48 : stepMinutes * 1.6;
               return (
                 <div key={sIdx} className="grid-cell cursor-default" style={{ height: `${slotPx}px` }}>
                   {show && <div className="time-col-label">{lbl}</div>}
@@ -99,7 +114,7 @@ export default function TimeGrid({ baseDate, days, stepMinutes = 15, dayRanges, 
                 <div
                   key={sIdx}
                   className={`grid-cell ${isSelected(d, sIdx) ? 'selected' : ''}`}
-                  style={{ height: stepMinutes === 15 ? '24px' : stepMinutes === 30 ? '48px' : `${stepMinutes * 1.6}px` }}
+                  style={{ height: `${slotPx}px` }}
                   onPointerDown={(e) => handlePointerDown(e, d, sIdx)}
                   onPointerEnter={() => handlePointerEnter(d, sIdx)}
                   role="button"
